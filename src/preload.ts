@@ -5,7 +5,6 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld('methods', {
 	telegramLogin: () => ipcRenderer.invoke('telegram-login'),
 	getToken: () => ipcRenderer.invoke('get-token'),
-	getUptime: () => ipcRenderer.invoke('get-uptime'),
 	setToken: (token: string) => ipcRenderer.send('set-token', token),
 	openTwitterAuth: () => ipcRenderer.invoke('open-twitter-auth'),
 	isTwitterLoggedIn: () => ipcRenderer.invoke('is-twitter-logged-in'),

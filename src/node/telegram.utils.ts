@@ -35,3 +35,4 @@ export function setAuthToken(_: Electron.IpcMainEvent, token: string) {
 	// @ts-expect-error false alarm
 	localStore.set(TOKEN_KEY, token);
 }
+

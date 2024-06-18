@@ -54,9 +54,11 @@
   "dependencies": {
     "@radix-ui/react-toast": "^1.1.5",
     "@tonconnect/ui-react": "^2.0.5",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "deepmerge-ts": "^7.0.3",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^9.0.0",
     "lucide-react": "^0.394.0",

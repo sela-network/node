@@ -1,44 +1,48 @@
 import { Duration, intervalToDuration } from 'date-fns';
 import { useEffect, useState } from 'react';
+import { claimUptimeReward, getScrapingStats, NodeAppStats } from '../api/user';
+import { UPTIME_UPDATE_INTERVAL_IN_MS } from '../constants';
 
 export function ScrapingEarnings() {
-	const [sessionUptime, setSessionUptime] = useState(0);
-	const [appUptime, setAppUptime] = useState(0);
+	const [stats, setStats] = useState<NodeAppStats| null>({
+		todayEarnings: 0,
+		totalEarnings: 0,
+		totalUptime: 0,
+		todayUptime: 0
+	})
 
-	async function updateUptime() {
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-			const response = (await (window as any).methods.getUptime()) as {
-				currentUptime: number;
-				currentSessionUptime: number;
-			};
-
-			if (!response) {
-				return;
-			}
-
-			setSessionUptime(response.currentSessionUptime);
-			setAppUptime(response.currentUptime);
-		} catch (e) {
-			console.log(e);
-		}
-	}
 
 	useEffect(() => {
-		setInterval(() => {
-			void updateUptime();
-		}, 5000);
+		(async () => {
+			const res = await getScrapingStats();
+			if(!res) {
+				return;
+			}
+			setStats(res);
+		})()
+	}, []);
 
-		void updateUptime();
+	useEffect(() => {
+		const unsub = setInterval(() => {
+			void
+
+			(async () => {
+				const res = await claimUptimeReward(UPTIME_UPDATE_INTERVAL_IN_MS);
+				setStats(res);
+			})()
+		}, UPTIME_UPDATE_INTERVAL_IN_MS);
+
+
+		return () => clearInterval(unsub);
 	}, []);
 
 	const appUptimeDuration = intervalToDuration({
 		start: 0,
-		end: appUptime * 1000,
+		end: stats.totalUptime * 1000,
 	});
 	const sessionUptimeDuration = intervalToDuration({
 		start: 0,
-		end: sessionUptime * 1000,
+		end: stats.todayUptime * 1000,
 	});
 
 	function formatDuration(duration: Duration) {
@@ -52,7 +56,7 @@ export function ScrapingEarnings() {
 				<p className="text-base-lg">Total Earnings</p>
 				<div className="mt-2 bg-secondary py-1 rounded-xlg">
 					<p className="font-bold text-3.5xl text-center">
-						+000,000,000
+						+{stats.totalEarnings.toFixed(2)}
 					</p>
 				</div>
 				<p className="text-xs-l text-hint mt-1">
@@ -62,7 +66,7 @@ export function ScrapingEarnings() {
 				<p className="text-base-lg mt-6">Today's Earnings</p>
 				<div className="mt-2 bg-secondary py-1 rounded-xlg">
 					<p className="font-bold text-3.5xl text-center">
-						+000,000,000
+						+{stats.todayEarnings.toFixed(2)}
 					</p>
 				</div>
 				<p className="text-xs-l text-hint mt-1">

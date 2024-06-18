@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../components/loader';
 import { useToast } from '../components/ui/use-toast';
 import { HashRoutes } from '../constants';
+import { linkNodeApp } from '../api/telegram';
 
 export function Login() {
 	const { toast } = useToast();
@@ -35,6 +36,7 @@ export function Login() {
 			const token = urlParams.get('tgAuthResult');
 			if (token) {
 				(window as any).methods.setToken(token);
+				await linkNodeApp();
 			}
 		} catch (e) {
 			toast({

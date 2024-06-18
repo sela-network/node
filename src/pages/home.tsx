@@ -1,6 +1,7 @@
 import { ScrapingEarnings } from '../components/scraping-earnings';
 import { TonConnect } from '../components/ton-connect';
 import { TwitterConnect } from '../components/twitter-connect';
+import { SNAPX_URL } from '../constants';
 
 export function Home() {
 	return (
@@ -54,7 +55,7 @@ export function Home() {
 					</table>
 				</div>
 			</div>
-			<button className="w-full btn-primary mt-6">Launch SnapX</button>
+			<a href={SNAPX_URL} target='_blank'  className="w-full btn-primary mt-6">Launch SnapX</a>
 			<br className="h-32"></br>
 		</div>
 	);
