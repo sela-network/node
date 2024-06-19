@@ -26,10 +26,10 @@ const router = createHashRouter([
 
 const root = createRoot(appContainer);
 root.render(
-	<React.StrictMode>
+	<>
 		<TonConnectUIProvider manifestUrl={TON_MANIFEST_URL}>
 			<RouterProvider router={router} />
 		</TonConnectUIProvider>
 		<Toaster />
-	</React.StrictMode>,
+	</>,
 );

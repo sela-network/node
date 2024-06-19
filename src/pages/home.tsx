@@ -2,6 +2,7 @@ import { ScrapingEarnings } from '../components/scraping-earnings';
 import { TonConnect } from '../components/ton-connect';
 import { TwitterConnect } from '../components/twitter-connect';
 import { SNAPX_URL } from '../constants';
+import { TwitterTaskRunner } from '../components/twitter-task-runner';
 
 export function Home() {
 	return (
@@ -24,6 +25,8 @@ export function Home() {
 			<div className="mt-6">
 				<TwitterConnect />
 			</div>
+
+			<TwitterTaskRunner/>
 
 			<div className="mt-6 flex items-center flex-col">
 				<h1 className="font-bold text-lg">History</h1>
