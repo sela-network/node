@@ -12,11 +12,20 @@ export async function telegramLogin() {
 		});
 
 		const authUrl = `https://oauth.telegram.org/auth?bot_id=7138008894&origin=${TELEGRAM_BOT_URL}/en/auth/telegram`;
+		// const authUrl = `https://oauth.telegram.org`;
 		void authWindow.loadURL(authUrl);
 		authWindow.webContents.on('will-navigate', function (event, newUrl) {
-			authWindow.close();
-			authWindow = null;
-			resolve(newUrl);
+			console.log('new url ', newUrl)
+
+			if(newUrl === authUrl) {
+				return;
+			} else if(newUrl.includes('tgAuthResult')) {
+				console.log('got auth result');
+				authWindow.close();
+				authWindow = null;
+				resolve(newUrl);
+			}
+
 		});
 
 		authWindow.on('closed', function () {
@@ -36,3 +45,5 @@ export function setAuthToken(_: Electron.IpcMainEvent, token: string) {
 	localStore.set(TOKEN_KEY, token);
 }
 
+// @ts-expect-error false alarm
+localStore.delete(TOKEN_KEY);

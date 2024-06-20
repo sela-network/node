@@ -26,7 +26,7 @@ export function Home() {
 				<TwitterConnect />
 			</div>
 
-			<TwitterTaskRunner/>
+			{/*<TwitterTaskRunner/>*/}
 
 			<div className="mt-6 flex items-center flex-col">
 				<h1 className="font-bold text-lg">History</h1>
