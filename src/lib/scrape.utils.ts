@@ -1,4 +1,5 @@
-export function getFirstPostData() {
+export const getFirstPostData = `
+function getFirstPostData() {
 	const tweetElement = document.querySelector('div[data-testid="cellInnerDiv"]');
 
 	if (!tweetElement) {
@@ -56,3 +57,6 @@ export function getFirstPostData() {
 		postedAt: postedAt,
 	};
 }
+
+getFirstPostData();
+`

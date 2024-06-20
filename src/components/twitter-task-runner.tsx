@@ -44,12 +44,12 @@ export function TwitterTaskRunner() {
 				await webview.loadURL(`https://x.com/${task.userName}`);
 
 				await sleep(5000);
+
+				const js = `
+			${getFirstPostData}
+			`
 				// @ts-ignore
-				const post = await webview.executeJavaScript(`
-			${getFirstPostData.toString()}
-		
-			getFirstPostData()
-			`);
+				const post = await webview.executeJavaScript(js);
 
 				if (!post?.content) {
 					console.log('task failed, backing off', post);
