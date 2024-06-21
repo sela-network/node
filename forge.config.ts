@@ -13,6 +13,7 @@ import { rendererConfig } from './webpack.renderer.config';
 
 const config: ForgeConfig = {
 	packagerConfig: {
+		icon: './src/assets/icons/snapx',
 		asar: true,
 	},
 	rebuildConfig: {},

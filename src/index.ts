@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, session } from 'electron';
 import path from 'path';
 
 import {
+	clearTelegramAuth,
 	getAuthToken,
 	setAuthToken,
 	telegramLogin,
@@ -18,7 +19,7 @@ import {
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
-
+const RESET_APP_ON_STARTUP = true;
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
 	app.quit();
@@ -86,6 +87,12 @@ app.on('ready', () => {
 			callback(filePath);
 		},
 	);
+
+	if (RESET_APP_ON_STARTUP) {
+		logoutTwitter();
+		clearTelegramAuth();
+	}
+
 	createWindow();
 });
 
@@ -106,5 +113,8 @@ app.on('activate', () => {
 	}
 });
 
+// app.setLoginItemSettings({
+// 	openAtLogin: true
+// })
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

@@ -148,4 +148,7 @@ export async function logoutTwitter() {
 	for (const cookie of cookies) {
 		await session.defaultSession.cookies.remove(TWITTER_URL, cookie.name);
 	}
+
+	// @ts-expect-error false alarm
+	localStore.delete(USERNAME_KEY);
 }

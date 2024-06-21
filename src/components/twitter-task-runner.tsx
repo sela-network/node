@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { getFirstPostData } from '../lib/scrape.utils';
 import { getNextTask, NodeAppTask, NodeAppTasks, submitRecentPostTask } from '../api/task';
 import { sleep } from '../lib/utils';
+import { useTwitterLoggedIn } from '../stores/app-store';
 
 export function TwitterTaskRunner() {
-	const [loggedIn, setLoggedIn] = useState(false);
 	const webviewRef = useRef();
 	const [taskRunning, setTaskRunning] = useState(false);
+	const twitterLoggedIn = useTwitterLoggedIn();
 
 
 	async function getJob() {
@@ -22,13 +23,13 @@ export function TwitterTaskRunner() {
 
 
 	useEffect(() => {
-		if (!loggedIn) {
+		if (!twitterLoggedIn) {
 			return;
 		}
 		if (!taskRunning) {
 			void getJob();
 		}
-	}, [taskRunning, loggedIn]);
+	}, [taskRunning, twitterLoggedIn]);
 
 	async function executeTask(task: NodeAppTask) {
 		try {
@@ -72,21 +73,7 @@ export function TwitterTaskRunner() {
 		window.webview = webviewRef?.current;
 	}, [webviewRef.current]);
 
-
-	async function checkTwitterLogin() {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		const loggedIn = (await (
-			window as any
-		).methods.isTwitterLoggedIn()) as boolean;
-
-		setLoggedIn(loggedIn);
-	}
-
-	useEffect(() => {
-		void checkTwitterLogin();
-	}, []);
-
-	if (!loggedIn) {
+	if (!twitterLoggedIn) {
 		return null;
 	}
 

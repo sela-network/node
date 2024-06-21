@@ -5,6 +5,7 @@ interface BaseTask {
 	processBy: Date;
 	id: string;
 }
+
 export interface ScrapeRecentPostTask extends BaseTask {
 	type: NodeAppTasks.SCRAPE_RECENT_POST_OF_USER;
 	userName: string;
@@ -18,9 +19,17 @@ export enum NodeAppTasks {
 
 
 export async function getNextTask() {
-	return await fetcher<NodeAppTask | null>({ url: 'node-app/task', method: HttpMethod.Get });
+	try {
+		return await fetcher<NodeAppTask | null>({ url: 'node-app/task', method: HttpMethod.Get });
+	} catch (e) {
+		return false;
+	}
 }
 
 export async function submitRecentPostTask(data: Record<string, string>) {
-	return await fetcher<NodeAppTask | null>({ url: `node-app/task/${NodeAppTasks.SCRAPE_RECENT_POST_OF_USER}/submit`, method: HttpMethod.Post, data });
+	return await fetcher<NodeAppTask | null>({
+		url: `node-app/task/${NodeAppTasks.SCRAPE_RECENT_POST_OF_USER}/submit`,
+		method: HttpMethod.Post,
+		data,
+	});
 }

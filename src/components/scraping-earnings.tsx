@@ -2,6 +2,7 @@ import { Duration, intervalToDuration } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { claimUptimeReward, getScrapingStats, NodeAppStats } from '../api/user';
 import { UPTIME_UPDATE_INTERVAL_IN_MS } from '../constants';
+import { useTwitterLoggedIn } from '../stores/app-store';
 
 export function ScrapingEarnings() {
 	const [stats, setStats] = useState<NodeAppStats| null>({
@@ -10,7 +11,8 @@ export function ScrapingEarnings() {
 		totalUptime: 0,
 		todayUptime: 0
 	})
-	const [loggedIn, setLoggedIn] = useState(false);
+
+	const twitterLoggedIn = useTwitterLoggedIn();
 
 
 	useEffect(() => {
@@ -24,7 +26,7 @@ export function ScrapingEarnings() {
 	}, []);
 
 	useEffect(() => {
-		if(!loggedIn) {
+		if(!twitterLoggedIn) {
 			return;
 		}
 		const unsub = setInterval(() => {
@@ -37,21 +39,8 @@ export function ScrapingEarnings() {
 
 
 		return () => clearInterval(unsub);
-	}, [loggedIn]);
+	}, [twitterLoggedIn]);
 
-
-	async function checkTwitterLogin() {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		const loggedIn = (await (
-			window as any
-		).methods.isTwitterLoggedIn()) as boolean;
-
-		setLoggedIn(loggedIn);
-	}
-
-	useEffect(() => {
-		void checkTwitterLogin();
-	}, []);
 
 	const appUptimeDuration = intervalToDuration({
 		start: 0,

@@ -7,19 +7,21 @@ import {
 } from '../lib/native.utils';
 import { Loader } from './loader';
 import { useToast } from './ui/use-toast';
+import { useSetTwitterLoggedIn, useTwitterLoggedIn } from '../stores/app-store';
 
 export function TwitterConnect() {
 	const { toast } = useToast();
 
 	const [connecting, setConnecting] = useState(false);
-	const [loggedIn, setLoggedIn] = useState(false);
 	const [username, setUsername] = useState('');
+	const twitterLoggedIn = useTwitterLoggedIn();
+	const setTwitterLoggedIn =  useSetTwitterLoggedIn();
 
 	async function openTwitterAuth() {
 		try {
 			setConnecting(true);
 			const loggedIn = await initiateTwitterAuth();
-			setLoggedIn(loggedIn);
+			setTwitterLoggedIn(loggedIn);
 			if (!loggedIn) {
 				toast({
 					description: 'Could not connect to account',
@@ -41,16 +43,16 @@ export function TwitterConnect() {
 	}
 
 	useEffect(() => {
-		if (loggedIn) {
+		if (twitterLoggedIn) {
 			void getTwitterUsername()
 				.then(setUsername)
 				.catch(() => {});
 		}
-	}, [loggedIn]);
+	}, [twitterLoggedIn]);
 
 	function disconnectTwitter() {
 		void logoutTwitter();
-		setLoggedIn(false);
+		setTwitterLoggedIn(false);
 		setUsername('');
 	}
 
@@ -60,7 +62,7 @@ export function TwitterConnect() {
 			window as any
 		).methods.isTwitterLoggedIn()) as boolean;
 
-		setLoggedIn(loggedIn);
+		setTwitterLoggedIn(loggedIn);
 	}
 	useEffect(() => {
 		void checkTwitterLogin();
@@ -81,22 +83,22 @@ export function TwitterConnect() {
 						{username ? `@${username}` : 'Connect your account'}
 					</p>
 					<p
-						className={`ml-auto font-bold ${loggedIn && 'text-green'}`}
+						className={`ml-auto font-bold ${twitterLoggedIn && 'text-green'}`}
 					>
-						• {loggedIn ? 'Connected' : 'Unconnected'}
+						• {twitterLoggedIn ? 'Connected' : 'Unconnected'}
 					</p>
 				</div>
 
 				{!connecting && (
 					<button
-						className={`mt-7 ${loggedIn && 'text-destructive border-destructive'} btn-secondary self-center tap-effect`}
+						className={`mt-7 ${twitterLoggedIn && 'text-destructive border-destructive'} btn-secondary self-center tap-effect`}
 						onClick={() =>
-							loggedIn
+							twitterLoggedIn
 								? disconnectTwitter()
 								: void openTwitterAuth()
 						}
 					>
-						{loggedIn ? 'Disconnect' : 'Connect'}
+						{twitterLoggedIn ? 'Disconnect' : 'Connect'}
 					</button>
 				)}
 

@@ -1,14 +1,26 @@
 import { getScrapingStatsHistory, NodeAppStatsHistory } from '../api/user';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns/format';
+import { useToast } from './ui/use-toast';
+import { Loader } from './loader';
 
 export function EarningHistory() {
 	const [history, setHistory] = useState<NodeAppStatsHistory[]>([])
+	const [loading, setLoading] = useState(false);
+	const {toast} = useToast();
+
 
 	useEffect(() => {
 		(async ()=> {
-			const res = await  getScrapingStatsHistory();
-			setHistory(res);
+			try {
+				setLoading(true)
+				const res = await  getScrapingStatsHistory();
+				setHistory(res);
+			} catch (e) {
+				toast({description:'Could not fetch history'});
+			} finally {
+				setLoading(false)
+			}
 		})()
 	}, []);
 
@@ -34,13 +46,19 @@ export function EarningHistory() {
 								{format(new Date(item.date), 'MMM d, yyyy') }
 							</td>
 							<td className="px-auto py-1">
-								{item.feedCount} Feed
+								{item.feedCount} Feeds
 							</td>
 							<td className="px-auto py-1">{item.totalPoints.toFixed(2)} SP</td>
 						</tr>
 					))}
 					</tbody>
 				</table>
+				{loading && (
+					<div className='w-full mt-4 flex justify-center'>
+						<Loader/>
+					</div>
+				)}
+				{!loading && !history.length && <p className='text-hint mt-4 text-sm w-full text-center'>No Data</p>}
 			</div>
 		</div>
 	)
