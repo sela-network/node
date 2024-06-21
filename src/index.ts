@@ -33,6 +33,7 @@ const createWindow = (): void => {
 		// width: 400,
 		width: 430,
 		resizable: false,
+		autoHideMenuBar: true,
 		webPreferences: {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 			webviewTag: true,

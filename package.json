@@ -1,8 +1,8 @@
 {
-  "name": "snapx-electric",
-  "productName": "snapx-electric",
+  "name": "snapx-node",
+  "productName": "snapx-node",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Snapx Node app",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
