@@ -10,6 +10,7 @@ export function ScrapingEarnings() {
 		totalUptime: 0,
 		todayUptime: 0
 	})
+	const [loggedIn, setLoggedIn] = useState(false);
 
 
 	useEffect(() => {
@@ -23,10 +24,12 @@ export function ScrapingEarnings() {
 	}, []);
 
 	useEffect(() => {
+		if(!loggedIn) {
+			return;
+		}
 		const unsub = setInterval(() => {
-			void
-
 			(async () => {
+
 				const res = await claimUptimeReward(UPTIME_UPDATE_INTERVAL_IN_MS);
 				setStats(res);
 			})()
@@ -34,6 +37,20 @@ export function ScrapingEarnings() {
 
 
 		return () => clearInterval(unsub);
+	}, [loggedIn]);
+
+
+	async function checkTwitterLogin() {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+		const loggedIn = (await (
+			window as any
+		).methods.isTwitterLoggedIn()) as boolean;
+
+		setLoggedIn(loggedIn);
+	}
+
+	useEffect(() => {
+		void checkTwitterLogin();
 	}, []);
 
 	const appUptimeDuration = intervalToDuration({
