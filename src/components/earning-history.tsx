@@ -26,13 +26,13 @@ export function EarningHistory() {
 
 	return (
 		<div className="flex items-center flex-col">
-			<h1 className="font-bold text-lg">History</h1>
-			<div className="flex flex-col bg-card py-3 px-4 mt-4 pt-10 pb-7 rounded-xlg w-full">
-				<table className="text-left">
+			<h1 className="text-base-lg text-hint self-start">History</h1>
+			<div className="flex flex-col bg-card pt-3 pb-7 px-4 mt-2 rounded-xlg w-full">
+				<table className="text-center">
 					<thead className="text-xs-l">
 					<tr>
 						<th scope="col">Date</th>
-						<th scope="col">No of Scrapings</th>
+						<th scope="col">Content Mined</th>
 						<th scope="col">Earnings</th>
 					</tr>
 					</thead>
@@ -42,13 +42,13 @@ export function EarningHistory() {
 							key={item.date.toString()}
 							className="text-xs text-left  text-hint"
 						>
-							<td className="px-auto py-1">
+							<td className="px-auto py-1 text-center">
 								{format(new Date(item.date), 'MMM d, yyyy') }
 							</td>
-							<td className="px-auto py-1">
+							<td className="px-auto py-1 text-center">
 								{item.feedCount} Feeds
 							</td>
-							<td className="px-auto py-1">{item.totalPoints.toFixed(2)} SP</td>
+							<td className="px-auto py-1 text-center">{item.totalPoints.toFixed(2)} SP</td>
 						</tr>
 					))}
 					</tbody>

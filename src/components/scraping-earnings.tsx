@@ -57,12 +57,12 @@ export function ScrapingEarnings() {
 
 	return (
 		<div className="flex items-center flex-col">
-			<h1 className="font-bold text-lg">Data Scraping Earnings</h1>
-			<div className="bg-card py-6 px-5 rounded-xlg mt-4 w-full">
+			<h1 className="text-base-lg text-hint self-start">Social Mining</h1>
+			<div className="bg-card py-6 px-5 rounded-xlg mt-2 w-full">
 				<p className="text-base-lg">Total Earnings</p>
 				<div className="mt-2 bg-secondary py-1 rounded-xlg">
 					<p className="font-bold text-3.5xl text-center">
-						+{stats.totalEarnings.toFixed(2)}
+						+ {stats.totalEarnings.toFixed(2)} SP
 					</p>
 				</div>
 				<p className="text-xs-l text-hint mt-1">
@@ -72,7 +72,7 @@ export function ScrapingEarnings() {
 				<p className="text-base-lg mt-6">Today's Earnings</p>
 				<div className="mt-2 bg-secondary py-1 rounded-xlg">
 					<p className="font-bold text-3.5xl text-center">
-						+{stats.todayEarnings.toFixed(2)}
+						+ {stats.todayEarnings.toFixed(2)} SP
 					</p>
 				</div>
 				<p className="text-xs-l text-hint mt-1">

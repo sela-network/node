@@ -70,8 +70,8 @@ export function TwitterConnect() {
 
 	return (
 		<div className="flex items-center flex-col">
-			<h1 className="font-bold text-lg">Account Connect</h1>
-			<div className="flex flex-col bg-card py-6 px-4 mt-4 pt-10 pb-[18px] rounded-xlg w-full">
+			<h1 className="text-base-lg text-hint self-start">Connect Account</h1>
+			<div className="flex flex-col bg-card pt-6 px-4 mt-2 pb-[18px] rounded-xlg w-full">
 				<div className="flex items-center text-base-lg text-hint">
 					<img
 						src="static://assets/icons/logo_x.png"
@@ -80,10 +80,10 @@ export function TwitterConnect() {
 						alt="wallet connect"
 					/>
 					<p className="mx-2">
-						{username ? `@${username}` : 'Connect your account'}
+						{username ? `@${username}` : 'Connect to X'}
 					</p>
 					<p
-						className={`ml-auto font-bold ${twitterLoggedIn && 'text-green'}`}
+						className={`ml-auto font-bold text-base-lg ${twitterLoggedIn ? 'text-cyan': 'text-destructive-alt'}`}
 					>
 						• {twitterLoggedIn ? 'Connected' : 'Unconnected'}
 					</p>
@@ -91,7 +91,7 @@ export function TwitterConnect() {
 
 				{!connecting && (
 					<button
-						className={`mt-7 ${twitterLoggedIn && 'text-destructive border-destructive'} btn-secondary self-center tap-effect`}
+						className={`mt-7 ${twitterLoggedIn && 'text-destructive-alt border-destructive-alt'} btn-secondary py-0.5 text-cyan border-cyan self-center tap-effect`}
 						onClick={() =>
 							twitterLoggedIn
 								? disconnectTwitter()

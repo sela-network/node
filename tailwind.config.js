@@ -29,6 +29,7 @@ module.exports = {
 				'link': 'var(--link)',
 				'hint-secondary': 'var(--hint-secondary)',
 				'green': 'var(--green)',
+				'cyan': 'var(--cyan)',
 				'primary': {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
@@ -40,6 +41,9 @@ module.exports = {
 				'destructive': {
 					DEFAULT: 'var(--destructive)',
 					foreground: 'hsl(var(--destructive-foreground))',
+				},
+				'destructive-alt': {
+					DEFAULT: 'var(--destructive-alt)',
 				},
 				'muted': {
 					DEFAULT: 'hsl(var(--muted))',

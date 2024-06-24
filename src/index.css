@@ -37,6 +37,7 @@ html, body, #react-container {
       --accent-foreground: 210 40% 98%;
 
       --destructive: #E53935;
+      --destructive-alt: #D1136B;
       --destructive-foreground: 210 40% 98%;
 
       --border: 217.2 32.6% 17.5%;
@@ -53,6 +54,7 @@ html, body, #react-container {
       --divider: #FFFFFF05;
       --link: #2990FF;
       --green: #00D159;
+      --cyan: #03C9C1;
   }
 
 }

@@ -57,7 +57,6 @@ export function Login() {
 					height={34}
 					alt="snapx"
 				/>
-				<h1 className="font-bold text-lg mt-6">Telegram integration</h1>
 			</div>
 			<div className="flex flex-col items-center">
 				<img
@@ -68,7 +67,7 @@ export function Login() {
 				/>
 				<p className="mt-6 text-lg font-bold">
 					{loggedIn
-						? 'Integration has been completed'
+						? 'Telegram has been connected'
 						: 'Connect your Telegram account'}
 				</p>
 			</div>
@@ -81,7 +80,7 @@ export function Login() {
 					{loading ? (
 						<Loader className="fill-white" />
 					) : (
-						'Telegram integration'
+						'Connect to Telegram'
 					)}
 				</button>
 			)}{' '}
