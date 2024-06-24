@@ -5,6 +5,15 @@ function getFirstPostData() {
 	if (!tweetElement) {
 		return null;
 	}
+	
+	let tweetId = null;
+	const links = document.querySelectorAll('a');
+	for(const link of links) {
+		if(link.href?.includes('status')) {
+		  const id = link.href.split('status/')[1];
+		  tweetId = id.split('/')[0]
+		}
+	}
 
 	const textElement = tweetElement.querySelectorAll(
 		'div[data-testid="tweetText"]',
@@ -55,6 +64,7 @@ function getFirstPostData() {
 			retweet && retweet[1] ? +retweet[1] : 0,
 		repliesCount: reply && reply[1] ? +reply[1] : 0,
 		postedAt: postedAt,
+		tweetId
 	};
 }
 
