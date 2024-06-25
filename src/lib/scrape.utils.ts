@@ -1,6 +1,9 @@
-export const getFirstPostData = `
-function getFirstPostData() {
-	const tweetElement = document.querySelector('div[data-testid="cellInnerDiv"]');
+export const insertionScript = `
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+
+function getFirstPostData(rootElement) {
+	const tweetElement = rootElement? rootElement : document.querySelector('div[data-testid="cellInnerDiv"]');
 
 	if (!tweetElement) {
 		return null;
@@ -11,7 +14,8 @@ function getFirstPostData() {
 	for(const link of links) {
 		if(link.href?.includes('status')) {
 		  const id = link.href.split('status/')[1];
-		  tweetId = id.split('/')[0]
+		  tweetId = id.split('/')[0];
+		  break;
 		}
 	}
 
@@ -45,28 +49,80 @@ function getFirstPostData() {
 			videoElement.querySelectorAll('source'),
 		).map((sourceElement) => sourceElement.src)
 		: [];
-
-	const like_regex = /\b(\d+) Like|Likes\b/;
-	const retweet_regex = /\b(\d+)\s+(?:Repost|Reposts)\b/i;
-	const reply_regex = /\b(\d+) Repl(ies|y)\. Reply\b/;
-
-	const reply = tweetElement.innerHTML.match(reply_regex);
-	const like = tweetElement.innerHTML.match(like_regex);
-	const retweet =
-		tweetElement.innerHTML.match(retweet_regex);
-
+	
 	return {
 		content,
 		image,
 		video: videoSources,
-		likesCount: like && like[1] ? +like[1] : 0,
-		retweetsCount:
-			retweet && retweet[1] ? +retweet[1] : 0,
-		repliesCount: reply && reply[1] ? +reply[1] : 0,
 		postedAt: postedAt,
-		tweetId
+		tweetId,
+		...getStats(tweetElement),
 	};
 }
 
-getFirstPostData();
-`
+function getVal (val) {
+  multiplier = val.substr(-1).toLowerCase();
+  if (multiplier == "k")
+    return parseFloat(val) * 1000;
+  else if (multiplier == "m")
+    return parseFloat(val) * 1000000;
+    
+  return Number(val)
+}
+
+function getStats(tweetElement) {
+	const reply = tweetElement.querySelector('button[data-testid="reply"]')
+	const repliesCount = reply?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.innerHTML;
+
+	const retweet = tweetElement.querySelector('button[data-testid="retweet"]')
+	const retweetsCount = retweet?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.innerHTML;
+	
+	const likes = tweetElement.querySelector('button[data-testid="like"]')
+	const likesCount = likes?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.innerHTML;
+	
+	return {
+		likesCount: likesCount ? getVal(likesCount) : 0,
+		retweetsCount:
+			retweetsCount ? getVal(retweetsCount) : 0,
+		repliesCount: repliesCount ? getVal(repliesCount) : 0,
+	}
+}
+
+async function getComments() {
+	const tweetElement = document.querySelector('div[data-testid="cellInnerDiv"]');
+	const stats = getStats(tweetElement);
+	const repliesCount = stats.repliesCount;
+	
+	let comments = document.querySelectorAll('article[data-testid="tweet"]');
+	const maxDepth = 15;
+	let currentDepth = 0;
+	const commentMap = {};
+
+	while(comments.length < repliesCount && currentDepth++ < maxDepth) {
+		for(const comment of comments) {
+	  		const data = getFirstPostData(comment)
+	  		commentMap[data.content] = data;
+		}
+		scrollToBottom();
+		await sleep(1500)
+		showHiddenComments();
+		comments = document.querySelectorAll('article[data-testid="tweet"]');
+	}
+	
+	return Object.values(commentMap);
+}
+
+function scrollToBottom() {
+	window.scrollTo(0, document.body.scrollHeight);
+}
+
+function showHiddenComments() {
+	const showBtn = document.querySelectorAll('article button[role="button"]')
+	for(const btn of showBtn) {
+  		if(btn.innerHTML.includes('Show')) {
+  			console.log('clicking button to show')
+    		btn.click()
+  		}
+	}
+}
+`;
