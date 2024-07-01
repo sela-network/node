@@ -124,5 +124,13 @@ function showHiddenComments() {
     		btn.click()
   		}
 	}
+
+	const showSpamButtons = document.querySelectorAll('div[data-testid="cellInnerDiv"] button[role="button"]');
+	for(const btn of showSpamButtons) {
+  		if(btn.innerHTML.includes('Show probable spam')) {
+  			console.log('clicking button to show')
+    		btn.click()
+  		}
+	}
 }
 `;

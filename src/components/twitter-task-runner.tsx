@@ -3,6 +3,7 @@ import { insertionScript } from '../lib/scrape.utils';
 import { getNextTask, NodeAppTask, NodeAppTasks, submitComments, submitRecentPostTask } from '../api/task';
 import { sleep } from '../lib/utils';
 import { useTwitterLoggedIn } from '../stores/app-store';
+import {differenceInSeconds} from 'date-fns';
 
 export function TwitterTaskRunner() {
 	const webviewRef = useRef();
@@ -11,14 +12,6 @@ export function TwitterTaskRunner() {
 
 	async function getJob() {
 		const res = await getNextTask();
-		// const res = {
-		// 	"type": NodeAppTasks.SCRAPE_POST_COMMENTS,
-		// 	"userName": "rektcapital",
-		// 	"createdAt": new Date(),
-		// 	"id": "211",
-		// 	tweetId: '1805066389482565982'
-		// };
-		// await sleep(2000);
 		if (res) {
 			await executeTask(res);
 		} else {
@@ -39,6 +32,7 @@ export function TwitterTaskRunner() {
 	}, [taskRunning, twitterLoggedIn]);
 
 	async function executeTask(task: NodeAppTask) {
+		const taskStartTime = new Date();
 		try {
 			setTaskRunning(true);
 			const webview = webviewRef.current;
@@ -61,12 +55,9 @@ export function TwitterTaskRunner() {
 				const post = await webview.executeJavaScript(js);
 
 				if (!post?.content) {
-					console.log('task failed, backing off', post);
-					await sleep(20000);
+					console.log('task failed', post);
 				} else {
 					await submitRecentPostTask({ ...post, userName: task.userName, taskId: task.id });
-					// backoff time
-					await sleep(2000);
 				}
 			} else if (task.type === NodeAppTasks.SCRAPE_POST_COMMENTS) {
 				if(!task.tweetId) {
@@ -90,15 +81,23 @@ export function TwitterTaskRunner() {
 				const comments = await webview.executeJavaScript(`getComments();`);
 				if (comments.length) {
 					await submitComments({comments, tweetId: task.tweetId});
-					await sleep(3000);
 				} else {
-					console.log('no comments, backing off');
-					await sleep(3000);
+					console.log('no comments');
 				}
 			}
 		} catch (e) {
 			console.log('task failed error', e);
 		} finally {
+			const taskEndTime = new Date();
+			const difference = differenceInSeconds(taskEndTime, taskStartTime);
+
+			if (difference <=60) {
+				const sleepTime = 60- difference;
+				console.log(`sleeping for ${sleepTime} seconds`);
+				await sleep(sleepTime * 1000);
+			}
+
+			console.log('setting task running false')
 			setTaskRunning(false);
 		}
 	}
