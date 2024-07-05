@@ -91,10 +91,10 @@ function getStats(tweetElement) {
 async function getComments() {
 	const tweetElement = document.querySelector('div[data-testid="cellInnerDiv"]');
 	const stats = getStats(tweetElement);
-	const repliesCount = stats.repliesCount;
+	const repliesCount = Math.min(stats.repliesCount, 10);
 	
 	let comments = document.querySelectorAll('article[data-testid="tweet"]');
-	const maxDepth = 15;
+	const maxDepth = 2;
 	let currentDepth = 0;
 	const commentMap = {};
 
