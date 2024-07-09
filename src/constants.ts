@@ -15,8 +15,8 @@ export const HashRoutes = {
 export const TON_MANIFEST_URL =
 	'https://snapx-dev-public.s3.ap-northeast-2.amazonaws.com/tonconnect-manifest.json';
 
-export const SERVER_URL = 'https://api.dev.snapx.co';
-// export const SERVER_URL = 'https://api.snapx.co';
+// export const SERVER_URL = 'https://api.dev.snapx.co';
+export const SERVER_URL = 'https://api.snapx.co';
 // export const SERVER_URL = 'http://localhost:8003';
 export const UPTIME_UPDATE_INTERVAL_IN_MS = 2000;
 export const SNAPX_URL = 'https://t.me/snapx_staging_bot/snapx_staging';
