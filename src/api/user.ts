@@ -13,8 +13,21 @@ export interface NodeAppStatsHistory {
 	totalPoints: number;
 }
 
+export interface ReferralData {
+	referralCode: string;
+	referrerCount: number;
+	isReferred: boolean;
+}
+
 export async function getScrapingStats() {
 	return await fetcher<NodeAppStats>({ url: 'node-app/stats', method: HttpMethod.Get });
+}
+export async function getReferralData() {
+	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Get });
+}
+
+export async function submitReferralCode(code: string) {
+	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Post, data: {code} });
 }
 
 export async function getScrapingStatsHistory() {

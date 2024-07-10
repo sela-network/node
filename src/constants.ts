@@ -5,11 +5,13 @@ export const APP_UPTIME_KEY = 'APP_UPTIME_KEY';
 export const ROUTES = {
 	LOGIN: '',
 	HOME: '/home',
+	REFERRAL: '/referral',
 };
 
 export const HashRoutes = {
 	LOGIN: '',
 	HOME: '#home',
+	REFERRAL: '#referral',
 };
 
 export const TON_MANIFEST_URL =

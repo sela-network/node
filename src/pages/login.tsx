@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { Loader } from '../components/loader';
 import { useToast } from '../components/ui/use-toast';
-import { HashRoutes } from '../constants';
+import { HashRoutes, SNAPX_URL } from '../constants';
 import { linkNodeApp } from '../api/telegram';
 
 export function Login() {
 	const { toast } = useToast();
 	const [loading, setLoading] = useState(false);
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [tmaOpened, setTmaOpened] = useState(false);
 
 	async function init() {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -48,26 +49,31 @@ export function Login() {
 		}
 	}
 
+	function openSnapxTma() {
+		window.open(SNAPX_URL, '_blank');
+		setTmaOpened(true);
+	}
+
 	return (
-		<div className="flex flex-col w-full h-full items-center py-6 px-4 justify-between">
-			<div className="flex flex-col items-center">
+		<div className='flex flex-col w-full h-full items-center py-6 px-4 justify-between'>
+			<div className='flex flex-col items-center'>
 				<img
-					src="static://assets/images/snapx-logo-white.png"
-					width={120}
-					height={34}
-					alt="snapx"
+					src='static://assets/images/snapx-logo-white.svg'
+					width={140}
+					height={40}
+					alt='snapx'
 				/>
 			</div>
-			<div className="flex flex-col items-center">
+			<div className='flex flex-col items-center'>
 				<img
-					src={`static://assets/icons/${loggedIn ? 'ic_check.png' : 'ic_telegram.svg'}`}
+					src={`static://assets/icons/${loggedIn ? tmaOpened ? 'ic_check.png' : 'snapx-tma.svg' : 'ic_telegram.svg'}`}
 					width={108}
-					height={18}
-					alt="telegram"
+					height={108}
+					alt='telegram'
 				/>
-				<p className="mt-6 text-lg font-bold">
-					{loggedIn
-						? 'Telegram has been connected'
+				<p className='mt-6 text-lg font-bold'>
+					{loggedIn ? tmaOpened ? 'Telegram has been connected' :
+							'Launch the SnapX App'
 						: 'Connect your Telegram account'}
 				</p>
 			</div>
@@ -75,19 +81,27 @@ export function Login() {
 				<button
 					onClick={() => void login()}
 					disabled={loading}
-					className="w-full btn-primary tap-effect mb-[20%]"
+					className='w-full btn-primary tap-effect mb-[20%]'
 				>
 					{loading ? (
-						<Loader className="fill-white" />
+						<Loader className='fill-white' />
 					) : (
 						'Connect to Telegram'
 					)}
 				</button>
-			)}{' '}
-			{loggedIn && (
+			)}
+			{loggedIn && !tmaOpened && (
+				<button
+					onClick={openSnapxTma}
+					className='w-full btn-primary tap-effect mb-[20%]'
+				>
+					Go to Snapx App
+				</button>
+			)}
+			{loggedIn && tmaOpened && (
 				<a
 					href={HashRoutes.HOME}
-					className="w-full btn-primary tap-effect mb-[20%]"
+					className='w-full btn-primary tap-effect mb-[20%]'
 				>
 					Next
 				</a>

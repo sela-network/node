@@ -1,18 +1,51 @@
 import { ScrapingEarnings } from '../components/scraping-earnings';
 import { TonConnect } from '../components/ton-connect';
 import { TwitterConnect } from '../components/twitter-connect';
-import { SNAPX_URL } from '../constants';
+import { HashRoutes, SNAPX_URL } from '../constants';
 import { TwitterTaskRunner } from '../components/twitter-task-runner';
 import { EarningHistory } from '../components/earning-history';
+import { useEffect, useState } from 'react';
+import { getReferralData } from '../api/user';
 
 export function Home() {
+	const [loading, setLoading] = useState(true);
+
+
+	useEffect(() => {
+		(async () => {
+			const res = await getReferralData();
+			if (!res.isReferred) {
+				window.location.href = HashRoutes.REFERRAL;
+			} else {
+				setLoading(false);
+			}
+		})();
+	}, []);
+
+
+	if (loading) {
+		return (
+			<div className='flex flex-col items-center justify-center w-full h-[100vh] py-6 px-4 bg-background'>
+				<div className='flex justify-center w-full mb-20'>
+					<img
+						src='static://assets/images/snapx-logo-white.svg'
+						width={140}
+						height={40}
+						alt='snapx'
+					/>
+				</div>
+			</div>
+		);
+	}
+
+
 	return (
 		<div className='flex flex-col w-full h-full py-6 px-4 bg-background'>
 			<div className='flex justify-center w-full'>
 				<img
-					src='static://assets/images/snapx-logo-white.png'
-					width={120}
-					height={34}
+					src='static://assets/images/snapx-logo-white.svg'
+					width={140}
+					height={40}
 					alt='snapx'
 				/>
 			</div>

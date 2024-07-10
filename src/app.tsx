@@ -8,6 +8,7 @@ import { ROUTES, TON_MANIFEST_URL } from './constants';
 import ErrorPage from './pages/error-page';
 import { Home } from './pages/home';
 import { Login } from './pages/login';
+import { Referral } from './pages/referral';
 
 const appContainer = document.getElementById('react-container');
 
@@ -20,6 +21,11 @@ const router = createHashRouter([
 	{
 		path: ROUTES.HOME,
 		element: <Home />,
+		errorElement: <ErrorPage />,
+	},
+	{
+		path: ROUTES.REFERRAL,
+		element: <Referral />,
 		errorElement: <ErrorPage />,
 	},
 ]);
