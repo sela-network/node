@@ -69,7 +69,7 @@ export function Referral() {
 					onChange={(code) => !loading && !verified && setCode(code.toUpperCase())}
 					numInputs={CODE_LENGTH}
 					containerStyle='gap-2 mt-6'
-					inputStyle={`bg-[#333D4D] text-white !w-[52px] h-[61px] rounded-[10px] text-bold text-2xl ${error && 'border border-destructive-alt'}`}
+					inputStyle={`bg-[#333D4D] text-white !w-[52px] h-[61px] rounded-xlg text-bold text-2xl ${error && 'border border-destructive-alt'}`}
 					renderInput={(props) => <input  {...props} />}
 				/>
 				<p className={`text-xs text-destructive-alt mt-2 ${!error && 'invisible'}`}>This is not a referral code. Please check

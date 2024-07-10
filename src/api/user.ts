@@ -26,6 +26,14 @@ export async function getReferralData() {
 	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Get });
 }
 
+export async function getReferralPoints() {
+	return await fetcher<number>({ url: 'node-app/referral/points', method: HttpMethod.Get });
+}
+
+export async function claimReferralPoints() {
+	return await fetcher<number>({ url: 'node-app/referral/points/claim', method: HttpMethod.Post });
+}
+
 export async function submitReferralCode(code: string) {
 	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Post, data: {code} });
 }

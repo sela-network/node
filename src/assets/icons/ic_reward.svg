@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23.001" viewBox="0 0 23 23.001">
+  <g id="ic_reward" transform="translate(-2 -1.999)">
+    <rect id="사각형_188" data-name="사각형 188" width="21" height="4" rx="1" transform="translate(3 9.072)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_1355" data-name="패스 1355" d="M12,8V21" transform="translate(1.5 3)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_1356" data-name="패스 1356" d="M22,12v7a2.246,2.246,0,0,1-2.429,2H7.429A2.246,2.246,0,0,1,5,19V12" transform="translate(0 3)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="패스_1357" data-name="패스 1357" d="M8.036,8A2.807,2.807,0,0,1,5,5.5,2.807,2.807,0,0,1,8.036,3c2.4-.034,4.565,1.949,5.464,5,.9-3.051,3.067-5.034,5.464-5A2.807,2.807,0,0,1,22,5.5,2.807,2.807,0,0,1,18.964,8" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

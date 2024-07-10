@@ -10,4 +10,5 @@ contextBridge.exposeInMainWorld('methods', {
 	isTwitterLoggedIn: () => ipcRenderer.invoke('is-twitter-logged-in'),
 	logoutTwitter: () => ipcRenderer.invoke('logout-twitter'),
 	getTwitterUsername: () => ipcRenderer.invoke('get-twitter-username'),
+	copyToClipboard: (text: string) => ipcRenderer.send('copy-to-clipboard', text),
 });

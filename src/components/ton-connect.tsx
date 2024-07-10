@@ -11,7 +11,7 @@ export function TonConnect() {
 
 	return (
 		<button
-			className={`rounded-xlg py-3.5 px-4 bg-card flex items-center justify-center ${!wallet && 'tap-effect'}`}
+			className={`rounded-xlg py-[15px] px-4 bg-card flex items-center justify-center ${!wallet && 'tap-effect'}`}
 			onClick={() => (!wallet ? open() : undefined)}
 		>
 			<img
@@ -22,7 +22,7 @@ export function TonConnect() {
 			/>
 			{!wallet && (
 				<>
-					<p className="ml-2 text-base-lg">Connect Wallet</p>
+					<p className="ml-2 text-sm">Connect Wallet</p>
 
 					<ChevronRightIcon className="ml-auto text-[#677280]" />
 				</>
@@ -30,7 +30,7 @@ export function TonConnect() {
 
 			{wallet && (
 				<>
-					<p className="ml-2 mr-auto text-base-lg">Connected</p>
+					<p className="ml-2 mr-auto text-sm">Connected</p>
 
 					<TonConnectButton />
 				</>

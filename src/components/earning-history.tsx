@@ -26,10 +26,10 @@ export function EarningHistory() {
 
 	return (
 		<div className="flex items-center flex-col">
-			<h1 className="text-base-lg text-hint self-start">History</h1>
-			<div className="flex flex-col bg-card pt-3 pb-7 px-4 mt-2 rounded-xlg w-full">
+			<h1 className="text-sm text-hint self-start">History</h1>
+			<div className="flex flex-col bg-card py-6 px-4 mt-2 rounded-xlg w-full">
 				<table className="text-center">
-					<thead className="text-xs-l">
+					<thead className="text-xs font-bold">
 					<tr>
 						<th scope="col">Date</th>
 						<th scope="col">Content Mined</th>
@@ -40,7 +40,7 @@ export function EarningHistory() {
 					{history.map((item) => (
 						<tr
 							key={item.date.toString()}
-							className="text-xs text-left  text-hint"
+							className="text-xs text-left text-hint"
 						>
 							<td className="px-auto py-1 text-center">
 								{format(new Date(item.date), 'MMM d, yyyy') }
