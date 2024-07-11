@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsTrigger } from '../components/ui/tabs';
 import { TabsList } from '../components/ui/tabs';
 import { Referral } from '../components/referral';
 import { useSetTwitterLoggedIn, useTwitterLoggedIn } from '../stores/app-store';
+import { differenceInMilliseconds } from 'date-fns';
 
 const TABS = {
 	MINING: 'MINING',
@@ -28,6 +29,7 @@ export function Home() {
 	})
 	const [referralData, setReferralData] = useState<ReferralData | null>(null)
 	const setTwitterLoggedIn =  useSetTwitterLoggedIn();
+	const [lastUptimeUpdate, setLastUptimeUpdate]= useState<Date>(null);
 
 	useEffect(() => {
 		(async () => {
@@ -57,13 +59,16 @@ export function Home() {
 		}
 		const unsub = setInterval(() => {
 			(async () => {
-				const res = await claimUptimeReward(UPTIME_UPDATE_INTERVAL_IN_MS);
+				const elapsedSecondsSinceLastUpdate = lastUptimeUpdate ?  differenceInMilliseconds(new Date(), lastUptimeUpdate): UPTIME_UPDATE_INTERVAL_IN_MS;
+				setLastUptimeUpdate(new Date());
+
+				const res = await claimUptimeReward(elapsedSecondsSinceLastUpdate);
 				setStats(res);
 			})()
 		}, UPTIME_UPDATE_INTERVAL_IN_MS);
 
 		return () => clearInterval(unsub);
-	}, [twitterLoggedIn]);
+	}, [twitterLoggedIn, lastUptimeUpdate]);
 
 
 	async function checkTwitterLogin() {

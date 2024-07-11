@@ -41,9 +41,10 @@ function getFirstPostData(rootElement) {
 	const postedAt = postedAtElement
 		? postedAtElement.getAttribute('datetime')
 		: null;
-	const image = imageElement
-		? imageElement.src
-		: '';
+	let image = imageElement?.src || '';
+	if (image.includes('default_profile_images')) {
+	  image = '';
+	}	
 	const videoSources = videoElement
 		? Array.from(
 			videoElement.querySelectorAll('source'),
