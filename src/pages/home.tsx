@@ -18,7 +18,7 @@ const TABS = {
 
 export function Home() {
 	const [loading, setLoading] = useState(true);
-	const [selectedTab, setSelectedTab] = useState(TABS.REFERRAL);
+	const [selectedTab, setSelectedTab] = useState(TABS.MINING);
 	const twitterLoggedIn = useTwitterLoggedIn();
 	const [stats, setStats] = useState<NodeAppStats| null>({
 		todayEarnings: 0,
