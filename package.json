@@ -1,7 +1,7 @@
 {
   "name": "snapx-node",
   "productName": "snapx-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Snapx Node app",
   "main": ".webpack/main",
   "scripts": {
@@ -20,6 +20,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron-forge/plugin-webpack": "^7.4.0",
+    "@electron-forge/publisher-gcs": "^7.4.0",
     "@electron-forge/shared-types": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "@types/react": "18.3.1",
@@ -52,6 +53,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/storage": "^7.11.3",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
     "@sentry/electron": "^5.2.0",
@@ -72,6 +74,7 @@
     "react-router-dom": "^6.23.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "update-electron-app": "^3.0.0",
     "zustand": "^4.5.2"
   }
 }

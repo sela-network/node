@@ -23,6 +23,20 @@ const config: ForgeConfig = {
 		new MakerRpm({}),
 		new MakerDeb({}),
 	],
+	publishers: [
+		{
+			name: '@electron-forge/publisher-gcs',
+			config: {
+				storageOptions: {
+					// add additional Storage constructor parameters here
+					projectId: 'snapx-420106'
+				},
+				bucket: 'snapx-node-releases',
+				folder: 'releases',
+				public: true
+			}
+		}
+	],
 	plugins: [
 		new AutoUnpackNativesPlugin({}),
 		new WebpackPlugin({
