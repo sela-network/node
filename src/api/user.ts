@@ -22,12 +22,16 @@ export interface ReferralData {
 export async function getScrapingStats() {
 	return await fetcher<NodeAppStats>({ url: 'node-app/stats', method: HttpMethod.Get });
 }
+
 export async function getReferralData() {
 	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Get });
 }
 
 export async function getReferralPoints() {
-	return await fetcher<number>({ url: 'node-app/referral/points', method: HttpMethod.Get });
+	return await fetcher<{ referralCount: number; points: number }>({
+		url: 'node-app/referral/points',
+		method: HttpMethod.Get,
+	});
 }
 
 export async function claimReferralPoints() {
@@ -35,7 +39,7 @@ export async function claimReferralPoints() {
 }
 
 export async function submitReferralCode(code: string) {
-	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Post, data: {code} });
+	return await fetcher<ReferralData>({ url: 'node-app/referral', method: HttpMethod.Post, data: { code } });
 }
 
 export async function getScrapingStatsHistory() {
@@ -46,6 +50,6 @@ export async function claimUptimeReward(updateInterval: number) {
 	return await fetcher<NodeAppStats>({
 		method: HttpMethod.Post,
 		url: 'node-app/claim/uptime',
-		data: { updateInterval: updateInterval/1000 }
+		data: { updateInterval: updateInterval / 1000 },
 	});
 }

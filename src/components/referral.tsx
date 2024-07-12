@@ -7,6 +7,7 @@ import { Loader } from './loader';
 export function Referral({ referralData }: { referralData: ReferralData }) {
 	const { toast } = useToast();
 	const [reward, setReward] = useState(0);
+	const [referralCount, setReferralCount] = useState(referralData.referrerCount || 0);
 	const [loading, setLoading] = useState(false);
 
 	const canClaim = reward > 0;
@@ -30,8 +31,10 @@ export function Referral({ referralData }: { referralData: ReferralData }) {
 
 	async function updatePoints() {
 		try {
-			const res = await getReferralPoints();
-			setReward(res);
+			const { points, referralCount } = await getReferralPoints();
+			setReward(points);
+			setReferralCount(referralCount);
+
 		} catch {
 			toast({ description: 'Unable to get referral points', variant: 'destructive' });
 		}
@@ -89,7 +92,7 @@ export function Referral({ referralData }: { referralData: ReferralData }) {
 						alt='people'
 					/>
 					<p className='font-medium text-2xl ml-auto'>
-						{referralData?.referrerCount || 0}
+						{referralCount || 0}
 					</p>
 				</div>
 
