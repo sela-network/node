@@ -7,16 +7,20 @@ import { Loader } from './loader';
 export function Referral({ referralData }: { referralData: ReferralData }) {
 	const { toast } = useToast();
 	const [reward, setReward] = useState(0);
-	const [loading, setLoading] =useState(false);
+	const [loading, setLoading] = useState(false);
 
-	const canClaim = reward >  0;
+	const canClaim = reward > 0;
 
 	function copyReferralLink() {
-		if(!referralData?.referralCode) {
-			return;
+		try {
+			if (!referralData?.referralCode) {
+				return;
+			}
+			(window as any).methods.copyToClipboard(referralData.referralCode);
+			toast({ description: 'Copied to clipboard' });
+		} catch {
+			toast({ description: 'Could not copy', variant: 'destructive' });
 		}
-		(window as any).methods.copyToClipboard(referralData.referralCode);
-		toast({ description: 'Copied to clipboard' });
 	}
 
 	function shareDownloadLink() {
@@ -25,17 +29,22 @@ export function Referral({ referralData }: { referralData: ReferralData }) {
 	}
 
 	async function updatePoints() {
-		const res = await getReferralPoints();
-		setReward(res);
+		try {
+			const res = await getReferralPoints();
+			setReward(res);
+		} catch {
+			toast({ description: 'Unable to get referral points', variant: 'destructive' });
+		}
+
 	}
 
 	useEffect(() => {
-		void updatePoints()
+		void updatePoints();
 
 		const unsub = setInterval(() => {
 			(async () => {
-				await updatePoints()
-			})()
+				await updatePoints();
+			})();
 		}, REWARD_UPDATE_INTERVAL_IN_MS);
 
 
@@ -44,18 +53,18 @@ export function Referral({ referralData }: { referralData: ReferralData }) {
 
 
 	async function claimPoints() {
-		if(loading) {
+		if (loading) {
 			return;
 		}
-		setLoading(true)
+		setLoading(true);
 		try {
 			await claimReferralPoints();
 			setReward(0);
-			toast({description: 'Successfully claimed points'});
+			toast({ description: 'Successfully claimed points' });
 		} catch {
-			toast({description:'Could not claim, try later', variant: 'destructive'})
+			toast({ description: 'Could not claim, try later', variant: 'destructive' });
 		} finally {
-			setLoading(false)
+			setLoading(false);
 		}
 	}
 
@@ -99,7 +108,7 @@ export function Referral({ referralData }: { referralData: ReferralData }) {
 
 				<button onClick={claimPoints} disabled={!canClaim}
 						className={`text-lg font-bold ${canClaim ? 'bg-green' : 'bg-[#AAAAAA]'} py-1 px-10 tap-effect rounded-md-sm mt-[18px] mx-auto`}>
-					{loading? <Loader className='fill-white w-6 h-6'/>: 'Claim'}
+					{loading ? <Loader className='fill-white w-6 h-6' /> : 'Claim'}
 				</button>
 			</div>
 
@@ -119,7 +128,8 @@ export function Referral({ referralData }: { referralData: ReferralData }) {
 				</button>
 			</div>
 
-			<button onClick={shareDownloadLink} className='mt-4 w-full btn-primary tap-effect'>Share download link</button>
+			<button onClick={shareDownloadLink} className='mt-4 w-full btn-primary tap-effect'>Share download link
+			</button>
 
 		</div>
 	);

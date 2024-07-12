@@ -4,21 +4,28 @@ import { getNextTask, NodeAppTask, NodeAppTasks, submitComments, submitRecentPos
 import { sleep } from '../lib/utils';
 import { useTwitterLoggedIn } from '../stores/app-store';
 import { differenceInSeconds } from 'date-fns';
+import { useToast } from './ui/use-toast';
 
 export function TwitterTaskRunner() {
+	const { toast } = useToast();
+
 	const webviewRef = useRef();
 	const [taskRunning, setTaskRunning] = useState(false);
 	const twitterLoggedIn = useTwitterLoggedIn();
 	const [firstLoad, setFirstLoad] = useState(true);
 
 	async function getJob() {
-		const res = await getNextTask();
-		if (res) {
-			await executeTask(res);
-		} else {
-			setTimeout(() => {
-				void getJob();
-			}, 10000);
+		try {
+			const res = await getNextTask();
+			if (res) {
+				await executeTask(res);
+			} else {
+				setTimeout(() => {
+					void getJob();
+				}, 10000);
+			}
+		} catch {
+			toast({description: 'Could not get twitter task', variant: 'destructive'});
 		}
 	}
 

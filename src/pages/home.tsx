@@ -11,6 +11,7 @@ import { TabsList } from '../components/ui/tabs';
 import { Referral } from '../components/referral';
 import { useSetTwitterLoggedIn, useTwitterLoggedIn } from '../stores/app-store';
 import { differenceInMilliseconds } from 'date-fns';
+import { useToast } from '../components/ui/use-toast';
 
 const TABS = {
 	MINING: 'MINING',
@@ -18,6 +19,7 @@ const TABS = {
 };
 
 export function Home() {
+	const { toast } = useToast();
 	const [loading, setLoading] = useState(true);
 	const [selectedTab, setSelectedTab] = useState(TABS.MINING);
 	const twitterLoggedIn = useTwitterLoggedIn();
@@ -33,22 +35,30 @@ export function Home() {
 
 	useEffect(() => {
 		(async () => {
-			const res = await getScrapingStats();
-			if(!res) {
-				return;
+			try {
+				const res = await getScrapingStats();
+				if(!res) {
+					return;
+				}
+				setStats(res);
+			} catch {
+				toast({description:'Could not load stats', variant: 'destructive'});
 			}
-			setStats(res);
 		})()
 	}, []);
 
 	useEffect(() => {
 		(async () => {
-			const res = await getReferralData();
-			if (!res.isReferred) {
-				window.location.href = HashRoutes.REFERRAL;
-			} else {
-				setLoading(false);
-				setReferralData(res);
+			try {
+				const res = await getReferralData();
+				if (!res.isReferred) {
+					window.location.href = HashRoutes.REFERRAL;
+				} else {
+					setLoading(false);
+					setReferralData(res);
+				}
+			} catch {
+				toast({description:'Could not load stats', variant: 'destructive'});
 			}
 		})();
 	}, []);
@@ -59,11 +69,15 @@ export function Home() {
 		}
 		const unsub = setInterval(() => {
 			(async () => {
-				const elapsedSecondsSinceLastUpdate = lastUptimeUpdate ?  differenceInMilliseconds(new Date(), lastUptimeUpdate): UPTIME_UPDATE_INTERVAL_IN_MS;
-				setLastUptimeUpdate(new Date());
+				try {
+					const elapsedSecondsSinceLastUpdate = lastUptimeUpdate ?  differenceInMilliseconds(new Date(), lastUptimeUpdate): UPTIME_UPDATE_INTERVAL_IN_MS;
+					setLastUptimeUpdate(new Date());
 
-				const res = await claimUptimeReward(elapsedSecondsSinceLastUpdate);
-				setStats(res);
+					const res = await claimUptimeReward(elapsedSecondsSinceLastUpdate);
+					setStats(res);
+				} catch {
+					toast({description:'Could not get uptime', variant: 'destructive'});
+				}
 			})()
 		}, UPTIME_UPDATE_INTERVAL_IN_MS);
 
