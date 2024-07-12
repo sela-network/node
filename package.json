@@ -54,6 +54,9 @@
   "dependencies": {
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
+    "@sentry/electron": "^5.2.0",
+    "@sentry/react": "^8.17.0",
+    "@sentry/webpack-plugin": "^2.21.0",
     "@tonconnect/ui-react": "^2.0.5",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
