@@ -1,14 +1,14 @@
 {
   "name": "snapx-node",
   "productName": "snapx-node",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Snapx Node app",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "forge-publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
