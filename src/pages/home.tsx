@@ -1,7 +1,7 @@
 import { ScrapingEarnings } from '../components/scraping-earnings';
 import { TonConnect } from '../components/ton-connect';
 import { TwitterConnect } from '../components/twitter-connect';
-import { HashRoutes, SNAPX_URL, UPTIME_UPDATE_INTERVAL_IN_MS } from '../constants';
+import { HashRoutes, sela_network_URL, UPTIME_UPDATE_INTERVAL_IN_MS } from '../constants';
 import { TwitterTaskRunner } from '../components/twitter-task-runner';
 import { EarningHistory } from '../components/earning-history';
 import { useEffect, useState } from 'react';
@@ -104,10 +104,10 @@ export function Home() {
 			<div className='flex flex-col items-center justify-center w-full h-[100vh] py-6 px-4 bg-background'>
 				<div className='flex justify-center w-full mb-20'>
 					<img
-						src='static://assets/images/snapx-logo-white.svg'
+						src='static://assets/images/sela_network-logo-white.svg'
 						width={140}
 						height={40}
-						alt='snapx'
+						alt='sela_network'
 					/>
 				</div>
 			</div>
@@ -119,10 +119,10 @@ export function Home() {
 		<div className='flex flex-col w-full h-full py-6 bg-background'>
 			<div className='flex justify-center w-full'>
 				<img
-					src='static://assets/images/snapx-logo-white.svg'
+					src='static://assets/images/sela_network-logo-white.svg'
 					width={140}
 					height={40}
-					alt='snapx'
+					alt='sela_network'
 				/>
 			</div>
 			<TwitterTaskRunner />
@@ -148,7 +148,7 @@ export function Home() {
 					</div>
 
 
-					<a href={SNAPX_URL} target='_blank' className='w-full btn-primary mt-10'>Launch SnapX</a>
+					<a href={sela_network_URL} target='_blank' className='w-full btn-primary mt-10'>Launch sela_network</a>
 					<div className='mt-10 w-full flex flex-col'>
 						<TonConnect />
 					</div>

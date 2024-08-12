@@ -46,10 +46,10 @@ export function Referral() {
 		<div className='flex flex-col w-full h-full items-center py-6 px-4 justify-between'>
 			<div className='flex flex-col items-center'>
 				<img
-					src='static://assets/images/snapx-logo-white.svg'
+					src='static://assets/images/sela_network-logo-white.svg'
 					width={140}
 					height={40}
-					alt='snapx'
+					alt='sela_network'
 				/>
 			</div>
 			<div className='flex flex-col items-center'>
@@ -81,7 +81,7 @@ export function Referral() {
 				disabled={!verified}
 				className={`w-full btn-primary ${!verified && 'bg-[#AAAAAA]'} tap-effect mb-[20%]`}
 			>
-				{loading ? <Loader className='fill-white' /> : 'Go to SnapX App'}
+				{loading ? <Loader className='fill-white' /> : 'Go to sela_network App'}
 			</button>
 		</div>
 	);

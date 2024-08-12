@@ -13,7 +13,7 @@ import { rendererConfig } from './webpack.renderer.config';
 
 const config: ForgeConfig = {
 	packagerConfig: {
-		icon: './src/assets/icons/snapx',
+		icon: './src/assets/icons/sela_network',
 		asar: true,
 	},
 	rebuildConfig: {},
@@ -29,9 +29,9 @@ const config: ForgeConfig = {
 			config: {
 				storageOptions: {
 					// add additional Storage constructor parameters here
-					projectId: 'snapx-420106'
+					projectId: 'sela_network-420106'
 				},
-				bucket: 'snapx-node-releases',
+				bucket: 'sela_network-node-releases',
 				folder: 'releases',
 				public: true
 			}

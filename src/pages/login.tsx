@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Loader } from '../components/loader';
 import { useToast } from '../components/ui/use-toast';
-import { HashRoutes, SNAPX_URL } from '../constants';
+import { HashRoutes, sela_network_URL } from '../constants';
 import { linkNodeApp } from '../api/telegram';
 
 export function Login() {
@@ -49,8 +49,8 @@ export function Login() {
 		}
 	}
 
-	function openSnapxTma() {
-		window.open(SNAPX_URL, '_blank');
+	function opensela_networkTma() {
+		window.open(sela_network_URL, '_blank');
 		setTmaOpened(true);
 	}
 
@@ -58,22 +58,22 @@ export function Login() {
 		<div className='flex flex-col w-full h-full items-center py-6 px-4 justify-between'>
 			<div className='flex flex-col items-center'>
 				<img
-					src='static://assets/images/snapx-logo-white.svg'
+					src='static://assets/images/sela_network-logo-white.svg'
 					width={140}
 					height={40}
-					alt='snapx'
+					alt='sela_network'
 				/>
 			</div>
 			<div className='flex flex-col items-center'>
 				<img
-					src={`static://assets/icons/${loggedIn ? tmaOpened ? 'ic_check.png' : 'snapx-tma.svg' : 'ic_telegram.svg'}`}
+					src={`static://assets/icons/${loggedIn ? tmaOpened ? 'ic_check.png' : 'sela_network-tma.svg' : 'ic_telegram.svg'}`}
 					width={108}
 					height={108}
 					alt='telegram'
 				/>
 				<p className='mt-6 text-lg font-bold'>
 					{loggedIn ? tmaOpened ? 'Telegram has been connected' :
-							'Launch the SnapX App'
+							'Launch the sela_network App'
 						: 'Connect your Telegram account'}
 				</p>
 			</div>
@@ -92,10 +92,10 @@ export function Login() {
 			)}
 			{loggedIn && !tmaOpened && (
 				<button
-					onClick={openSnapxTma}
+					onClick={opensela_networkTma}
 					className='w-full btn-primary tap-effect mb-[20%]'
 				>
-					Go to Snapx App
+					Go to sela_network App
 				</button>
 			)}
 			{loggedIn && tmaOpened && (

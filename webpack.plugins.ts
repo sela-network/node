@@ -21,7 +21,7 @@ export const plugins = [
 	}),
 	// sentryWebpackPlugin({
 	// 	authToken: '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',
-	// 	org: "snapx",
+	// 	org: "sela_network",
 	// 	project: "node-app",
 	// })
 ];
