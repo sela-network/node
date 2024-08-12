@@ -1,8 +1,8 @@
 {
-  "name": "snapx-node",
-  "productName": "snapx-node",
-  "version": "1.0.4",
-  "description": "Snapx Node app",
+  "name": "sela-netowrk-node",
+  "productName": "sela-netowrk-node",
+  "version": "0.1.0",
+  "description": "Sela Network Node",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
