@@ -1,1 +1,1 @@
-export const TELEGRAM_BOT_URL = 'https://sela_network.co';
+export const TELEGRAM_BOT_URL = 'https://selanetwork.io';
